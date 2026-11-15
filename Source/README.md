@@ -49,7 +49,7 @@ See [development notes](docs/DEVELOPMENT.md), [review and validation](docs/REVIE
 
 ## Distribution status
 
-These candidates are ad-hoc signed, not Apple Developer ID signed or notarized. macOS can block the first launch. After reviewing the source and download, use **System Settings > Privacy & Security > Open Anyway** if offered. Do not disable Gatekeeper. Managed Macs may require a notarized build.
+These candidates are ad-hoc signed, not Apple Developer ID signed or notarized. macOS can block the first launch. After reviewing the source and download, use **System Settings > Privacy & Security > Open Anyway** if offered. Do not disable Gatekeeper. Managed Macs may require a notarized build. See the [first-launch instructions](../README.md#first-launch-on-macos) for the complete path to the permission and confirmation steps.
 
 Apple Silicon is built and smoke-tested locally. Intel is cross-compiled and has not been run on an Intel Mac. Successful process startup is not evidence of successful DHCP packet exchange; live DHCP and discovery must be verified on an isolated Ethernet test segment before a production release.
 
