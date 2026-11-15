@@ -1,6 +1,6 @@
 # Bootpd Web
 
-Local web control for the built-in macOS bootpd DHCP server, with Ethernet device discovery. Version 0.2.0, pre-release.
+Local web control for the built-in macOS bootpd DHCP server, with Ethernet device discovery. Version 0.2.1 is undergoing local validation. The published application release remains 0.2.0 until validation is complete.
 
 ## Use the app
 
@@ -60,3 +60,7 @@ Project code: MIT. Bundled Python and other runtime components retain their orig
 ## Licenses and distribution review
 
 See [third-party notices](THIRD_PARTY.md) and the [license review](docs/COMPLIANCE.md). The v0.2.0 application ZIPs were repackaged with supplemental native-library notices. The builder copies these licenses into the app and download folder. Bootpd Web is independent of Apple Inc.
+
+## Clear expired leases
+
+**Clear expired leases** removes only currently expired DHCP entries from this panel for the saved subnet. The change persists across restarts. Active leases, the shared macOS lease database, ARP, discovered devices and existing activity are preserved. A renewed or newly issued lease appears again. Clearing is recorded in Activity. The control is disabled when no expired leases are visible or the helper needs updating.

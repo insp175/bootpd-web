@@ -10,7 +10,7 @@ import tarfile
 import urllib.request
 
 PROJECT = Path(__file__).resolve().parents[1]
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 
 
 def command(*args):
@@ -52,7 +52,7 @@ def prepare_payload(archive_path, payload):
         archive.extractall(payload)
     (payload / "python").rename(payload / "runtime")
     shutil.copytree(PROJECT / "licenses", payload / "licenses")
-    for name in ("app.py", "core.py", "helper.py", "network.py"):
+    for name in ("app.py", "core.py", "helper.py", "network.py", "leases.py"):
         shutil.copy2(PROJECT / name, payload / name)
     shutil.copy2(PROJECT / "macos/service.py", payload / "service.py")
     shutil.copytree(PROJECT / "static", payload / "static")

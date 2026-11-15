@@ -52,3 +52,7 @@ The prepared build was installed over the previous app. A launchd unload/bootstr
 For renewal, the server temporarily issued a 120-second lease to the iPhone 15. With the same server process and uninterrupted cable, the expiry advanced by 60 seconds after 59 seconds of observation. This confirms automatic renewal. The normal 3600-second setting was restored afterwards.
 
 The user selected Uninstall with full data removal. Verification found no application, installed helper, launchd plist, broker socket or app/helper processes. Ethernet configuration matched the pre-removal snapshot. The app data directory was removed as selected; the system bootpd executable and shared DHCP lease database remained. Retaining app data on uninstall is covered by automated tests but was not the physical test selected.
+
+## 0.2.1 expired lease clearing
+
+Regression coverage verifies active lease preservation, the expiry boundary, renewed and reassigned addresses, persistence after reopening the database, repeat clearing, subnet scope and unchanged shared lease file contents. The complete regression suite and JavaScript syntax check passed. The updated Desktop app and helper are provided for local user validation before publishing a new application release.

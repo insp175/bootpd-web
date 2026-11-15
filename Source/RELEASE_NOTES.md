@@ -1,3 +1,7 @@
+# 0.2.1 (pending local validation)
+
+Added Clear expired leases to the DHCP table. It persistently clears expired entries from this panel for the saved subnet, without rewriting the shared macOS lease database. Active leases remain visible; renewed leases reappear. The installed helper must be updated. Native-library license notices and first-launch instructions are included.
+
 # 0.2.0 - local release candidate
 
 - Native macOS app with a bundled Python runtime and system-authorized helper installation.

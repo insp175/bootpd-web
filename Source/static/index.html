@@ -29,10 +29,10 @@
 <button type="button" id="restore-network" class="secondary" disabled>Restore previous Ethernet settings</button></form>
 </section>
 <section>
-<div class="row"><h2>DHCP leases</h2><div class="actions"><button id="clear-arp" class="secondary" disabled>Clear Ethernet ARP</button><button id="refresh" class="secondary">Refresh</button></div></div>
+<div class="row"><h2>DHCP leases</h2><div class="actions"><button id="clear-expired-leases" class="secondary" disabled>Clear expired leases</button><button id="clear-arp" class="secondary" disabled>Clear Ethernet ARP</button><button id="refresh" class="secondary">Refresh</button></div></div>
 <p class="muted" id="updated">Refreshes every 5 seconds</p>
 <div class="scroll"><table><thead><tr><th>IP</th><th>MAC</th><th>Hostname</th><th>Expires</th><th>Lease</th><th>ARP cache</th></tr></thead><tbody id="leases"></tbody></table></div>
-<p class="muted">ARP entries do not guarantee reachability. Clearing ARP preserves DHCP leases.</p>
+<p class="muted">Clear expired leases removes expired entries from this panel for the saved subnet. The shared macOS lease database and active leases are preserved. Renewed leases reappear. ARP entries do not guarantee reachability; clearing ARP preserves DHCP leases.</p>
 </section>
 <section>
 <div class="row"><h2>Discovered devices</h2><div class="actions"><label class="checkbox-label" for="auto-scan"><input type="checkbox" id="auto-scan"><span>Scan every minute</span></label><button id="scan" class="secondary" disabled>Scan now</button><button id="clear-discovered" class="secondary" disabled>Clear devices and ARP</button></div></div>

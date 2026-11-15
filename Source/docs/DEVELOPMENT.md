@@ -6,6 +6,7 @@
 | --- | --- |
 | `app.py` | Unprivileged loopback HTTP server |
 | `helper.py` | Fixed DHCP, discovery, history and network operations |
+| `leases.py` | Persistent clearing of expired panel entries without rewriting system leases |
 | `core.py` | Configuration validation and lease/ARP parsers |
 | `network.py` | Restricted calls to the native IPv4 configuration tool |
 | `static/` | English web interface, theme and local session handling |
@@ -75,3 +76,7 @@ MACOS_SDK=/path/to/MacOSX.sdk python3 macos/build.py
 ```
 
 Do not add live configuration, device history, packet captures, tokens, credentials or build caches to the source repository. The old `install.sh` path was removed; the supported user-facing installation is the native app.
+
+## Expired lease clearing
+
+The helper stores cleared (IP, MAC, expiry) signatures in the cleared_leases table of its existing SQLite database, with one current signature per IP/MAC pair. Only expired leases in the saved subnet can be cleared. Status suppresses exact cleared expired signatures; active leases, renewed expiries and other MAC addresses remain visible. The shared macOS lease database is never rewritten. Activity clearing does not reset these signatures; full data removal deletes them with the app database.

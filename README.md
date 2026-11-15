@@ -52,3 +52,7 @@ Project code uses the [MIT license](Source/LICENSE). Bundled runtimes retain the
 Bootpd Web is an independent project, not affiliated with or endorsed by Apple Inc. Apple, Mac, macOS and iPhone are trademarks of Apple Inc., registered in the U.S. and other countries and regions.
 
 See the [third-party notices](Source/THIRD_PARTY.md) and [license and distribution review](Source/docs/COMPLIANCE.md). The v0.2.0 downloads were repackaged to include the supplemental native-library notices. Application behavior is unchanged.
+
+## Next version in validation
+
+The main branch includes **Clear expired leases** for version 0.2.1, currently undergoing local validation. It clears expired entries from this panel for the saved subnet while preserving the shared macOS lease database and active leases. Renewed leases reappear. The published application downloads above remain version 0.2.0 until validation is complete.

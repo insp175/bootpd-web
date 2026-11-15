@@ -24,7 +24,7 @@ const form = $('settings');
 const field = name => form.querySelector(`[name="${name}"]`);
 let refreshTask = null;
 const events = {
-  clear_discovered: 'Devices and ARP cleared', clear_arp: 'ARP cleared',
+  clear_discovered: 'Devices and ARP cleared', clear_arp: 'ARP cleared', clear_expired_leases: 'Expired leases cleared',
   restore_network: 'Ethernet settings restored', waiting_link: 'Waiting for Ethernet connection', start_failed: 'DHCP start failed', start: 'DHCP started', stop: 'DHCP stopped', save: 'Configuration saved',
   lease_observed: 'Lease observed', lease_changed: 'Lease changed'
 };
@@ -79,6 +79,7 @@ function settingsSaved() {
 function controls() {
   const blocked = state.demo || state.pending;
   $('clear-history').disabled = blocked;
+  $('clear-expired-leases').disabled = blocked || !state.canClearExpired || !state.hasExpired;
   const available = state.available !== false;
   const selected = Boolean(field('interface').value);
   const saved = selected && settingsSaved();
@@ -108,6 +109,8 @@ async function loadStatus(reset = false) {
     const data = await api({op: 'status'});
     Object.assign(state, {demo: Boolean(data.demo), running: data.running, scanning: Boolean(data.scan?.running), link: Boolean(data.link_active), networkBackups: data.network_backups || []});
     state.saved = data.config;
+    state.canClearExpired = (data.capabilities || []).includes('clear_expired_leases');
+    state.hasExpired = data.leases.some(item => item.status === 'expired');
     state.available = data.interfaces.some(item => item.id === data.config.interface);
     const selection = field('interface').value;
     const placeholder = node('option', selection && !data.interfaces.some(item => item.id === selection) ? 'Ethernet adapter disconnected' : 'Select Ethernet interface');
@@ -205,4 +208,9 @@ $('restore-network').onclick = () => {
 
 $('clear-history').onclick = () => {
   if (confirm('Clear all activity events? DHCP leases, discovered devices and settings are preserved.')) command({op: 'clear_history'});
+};
+
+$('clear-expired-leases').onclick = () => {
+  const subnet = state.saved?.subnet;
+  if (confirm(`Remove expired leases from this panel for ${subnet}? Active leases and the shared macOS lease database are preserved. Renewed leases will reappear.`)) command({op: 'clear_expired_leases'});
 };

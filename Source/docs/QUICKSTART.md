@@ -54,3 +54,7 @@ Repository: https://github.com/insp175/bootpd-web
 ## Licenses and affiliation
 
 Keep THIRD_PARTY.md and the licenses folder with the app when redistributing it. Copies are also stored inside the app payload. Bootpd Web is independent of Apple Inc. and is not affiliated with or endorsed by Apple. Apple, Mac, macOS and iPhone are trademarks of Apple Inc., registered in the U.S. and other countries and regions.
+
+## Clear expired leases
+
+**Clear expired leases** removes only currently expired DHCP entries from this panel for the saved subnet. The change persists across restarts. Active leases, the shared macOS lease database, ARP, discovered devices and existing activity are preserved. A renewed or newly issued lease appears again. Clearing is recorded in Activity. The control is disabled when no expired leases are visible or the helper needs updating.

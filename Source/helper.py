@@ -16,10 +16,12 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import network
+import leases as lease_list
 from core import DEFAULT, validate, plist_config, parse_leases, parse_arp
 
 BASE = Path("/var/db/bootpd-panel")
 SOCKET = "/var/run/bootpd-panel.sock"
+LEASE_FILE = Path("/var/db/dhcpd_leases")
 LOCK = threading.RLock()
 CHILD = None
 ARMED = False
@@ -287,18 +289,25 @@ def handle_scan(req):
     return start_scan()
 
 
+def current_leases(c):
+    try:
+        rows = parse_leases(LEASE_FILE.read_text(errors="replace"))
+    except FileNotFoundError:
+        return []
+    net = ipaddress.IPv4Network(c["subnet"])
+    return [row for row in rows if ipaddress.IPv4Address(row["ip"]) in net]
+
+
+def handle_clear_expired_leases(req):
+    c = config()
+    count = lease_list.clear_expired(DB, current_leases(c), time.time())
+    event("clear_expired_leases", {"subnet": c["subnet"], "count": count})
+    return {"cleared": count}
+
+
 def handle_status(req):
     c = config()
-    leases = []
-    try:
-        leases = parse_leases(Path("/var/db/dhcpd_leases").read_text(errors="replace"))
-    except FileNotFoundError:
-        pass
-    try:
-        net = ipaddress.IPv4Network(c["subnet"])
-        leases = [x for x in leases if ipaddress.IPv4Address(x["ip"]) in net]
-    except ValueError:
-        leases = []
+    leases = lease_list.visible_leases(DB, current_leases(c), time.time())
     arp = run(["/usr/sbin/arp", "-an"])
     devices = discovered(arp, c["interface"], leases)
     neighbours = {(x["ip"], x["mac"]) for x in parse_arp(arp, c["interface"])}
@@ -460,6 +469,7 @@ def handle_clear_history(req):
 
 
 COMMANDS = {
+    "clear_expired_leases": handle_clear_expired_leases,
     "clear_history": handle_clear_history,
     "restore_network": handle_restore_network,
     "scan": handle_scan,
@@ -500,7 +510,7 @@ def monitor():
                     c = config()
                     net = ipaddress.IPv4Network(c["subnet"])
                     rows = parse_leases(
-                        Path("/var/db/dhcpd_leases").read_text(errors="replace")
+                        LEASE_FILE.read_text(errors="replace")
                     )
                     for row in rows:
                         if ipaddress.IPv4Address(row["ip"]) not in net:
