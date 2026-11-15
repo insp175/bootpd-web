@@ -2,6 +2,21 @@
 
 A local web interface for the built-in macOS bootpd DHCP server, with Ethernet device discovery.
 
+## First launch on macOS
+
+**Bootpd Web is a community project. The downloadable apps are ad-hoc signed, without an Apple Developer ID certificate or Apple notarization.** macOS may block the first launch because it cannot verify the developer.
+
+If you trust this download and want to allow this app:
+
+1. Unzip the package, move **Bootpd Web.app** to **Applications** and try opening it once.
+2. Dismiss the warning, then open **Apple menu > System Settings > Privacy & Security**.
+3. Scroll down to **Security**, find the message about **Bootpd Web** and click **Open Anyway**.
+4. Authenticate if requested, then click **Open** in the confirmation dialog.
+
+The exception applies to this app; you do not need to disable Gatekeeper or use Terminal commands. If **Open Anyway** is missing, try opening the app again and return to this settings page. A managed Mac may prevent exceptions. Permission to launch the app is separate from the administrator approval required to install its helper.
+
+See [Apple's instructions for opening an unnotarized app](https://support.apple.com/en-us/102445).
+
 ## Folders
 
 - **[Application](Application/README.md)**: ready-to-run macOS packages, with Python included. Pick the Apple Silicon or Intel ZIP.
