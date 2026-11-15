@@ -1,5 +1,4 @@
-__pycache__/
-*.py[cod]
+Application/*.zip
+Application/Bootpd-Web-macOS-*/
+*.zip
 .DS_Store
-.build-cache/
-dist/

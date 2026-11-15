@@ -16,6 +16,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var buttons: [NSButton] = []
     var web: Process?
     var panelURL: URL?
+    var panelIsDemo = false
     var busy = false
     var lineBuffer = Data()
     var logHandle: FileHandle?
@@ -30,6 +31,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         NSApp.activate(ignoringOtherApps: true)
         if CommandLine.arguments.contains("--demo") {
             startPanel(demo: true)
+        } else if helperCurrent() {
+            startPanel(demo: false)
         }
     }
 
@@ -44,7 +47,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     func createWindow() {
-        window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 560, height: 430), styleMask: [.titled, .closable, .miniaturizable], backing: .buffered, defer: false)
+        window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 560, height: 500), styleMask: [.titled, .closable, .miniaturizable], backing: .buffered, defer: false)
         window.title = "Bootpd Web"
         window.delegate = self
         window.center()
@@ -97,7 +100,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         DispatchQueue.global(qos: .userInitiated).async {
             let process = Process()
             process.executableURL = URL(fileURLWithPath: "/usr/bin/osascript")
-            process.arguments = ["-e", "do shell script " + appleQuote(command) + " with administrator privileges"]
+            process.arguments = ["-e", "activate", "-e", "do shell script " + appleQuote(command) + " with administrator privileges"]
             let pipe = Pipe()
             process.standardOutput = pipe
             process.standardError = pipe
@@ -164,10 +167,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     func startPanel(demo: Bool) {
+        if let url = panelURL, web?.isRunning == true, panelIsDemo == demo {
+            NSWorkspace.shared.open(url)
+            return
+        }
         stopPanel()
+        panelIsDemo = demo
         let process = Process()
         process.executableURL = payload.appendingPathComponent("runtime/bin/python3")
-        process.arguments = ["-I", "-u", payload.appendingPathComponent("app.py").path, "--port", "0"] + (demo ? ["--demo"] : [])
+        process.arguments = ["-I", "-B", "-u", payload.appendingPathComponent("app.py").path, "--port", "0"] + (demo ? ["--demo"] : [])
         let pipe = Pipe()
         process.standardOutput = pipe
         process.standardInput = FileHandle.nullDevice
@@ -183,7 +191,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             pipe.fileHandleForReading.readabilityHandler = { handle in
                 let data = handle.availableData
                 if data.isEmpty { handle.readabilityHandler = nil; return }
-                DispatchQueue.main.async { self.receive(data) }
+                DispatchQueue.main.async {
+                    if self.web === process { self.receive(data) }
+                }
             }
             process.terminationHandler = { _ in
                 DispatchQueue.main.async {
@@ -211,7 +221,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     func stopPanel() {
-        if web?.isRunning == true { web?.terminate() }
+        if let process = web, process.isRunning {
+            process.terminate()
+            process.waitUntilExit()
+        }
         web = nil
         panelURL = nil
         try? logHandle?.close()
@@ -219,7 +232,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     func serviceCommand(_ action: String) -> String {
-        shellQuote(root.appendingPathComponent("runtime/bin/python3").path) + " -I " + shellQuote(root.appendingPathComponent("service.py").path) + " " + action
+        shellQuote(root.appendingPathComponent("runtime/bin/python3").path) + " -I -B " + shellQuote(root.appendingPathComponent("service.py").path) + " " + action
     }
 
     @objc func stopServices() {
@@ -236,7 +249,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     @objc func uninstallApp() {
         let alert = NSAlert()
         alert.messageText = "Uninstall Bootpd Web?"
-        alert.informativeText = "Stops DHCP and removes the installed helper service. The system bootpd and shared DHCP lease database are preserved. This application will be moved to Trash."
+        alert.informativeText = "Stops DHCP, restores backed-up Ethernet settings and removes the installed helper service. The system bootpd and shared DHCP lease database are preserved. This application will be moved to Trash."
         alert.addButton(withTitle: "Uninstall")
         alert.addButton(withTitle: "Cancel")
         let checkbox = NSButton(checkboxWithTitle: "Also delete settings, backups and device history", target: nil, action: nil)

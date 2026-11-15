@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bootpd Web</title>
+<link rel="stylesheet" href="/style.css">
+<script src="/app.js" defer></script>
+</head>
+<body>
+<header><div><small>MACOS / LOCAL NETWORK</small><h1>Bootpd Web</h1><p>DHCP and Ethernet discovery</p></div><div class="actions"><button id="theme-toggle" type="button" class="secondary theme-toggle" aria-pressed="false" aria-label="Switch to dark theme" title="Switch to dark theme"><svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg><svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg></button><span id="state">Connecting...</span></div></header>
+<main>
+<p class="notice" id="notice">DHCP only. No NAT or Internet Sharing. Use an isolated Ethernet network without another DHCP server.</p>
+<p id="error" role="alert"></p>
+<section>
+<h2>Network settings</h2>
+<form id="settings">
+<div class="grid">
+<label>Ethernet interface<select name="interface" required></select></label>
+<label>Subnet (CIDR)<input name="subnet" value="192.168.50.0/24" required></label>
+<label>Mac IPv4 address<input name="server" value="192.168.50.1" required></label>
+<label>Lease (seconds)<input name="lease" type="number" min="120" max="604800" value="3600" required></label>
+<label>Pool start<input name="start" value="192.168.50.100" required></label>
+<label>Pool end<input name="end" value="192.168.50.200" required></label>
+</div>
+<p class="muted">Save applies the IPv4 address and mask to this Ethernet adapter automatically. Its previous IPv4 configuration is backed up. No router or Internet Sharing is enabled. Stop DHCP before changing settings. A cable is not required to save or enable DHCP.</p>
+<p class="muted" id="settings-state" role="status"></p>
+<div class="actions"><button id="save">Save and apply Ethernet IP</button><button type="button" id="start">Start DHCP</button><button type="button" id="stop" class="secondary">Stop DHCP</button></div>
+<button type="button" id="restore-network" class="secondary" disabled>Restore previous Ethernet settings</button></form>
+</section>
+<section>
+<div class="row"><h2>DHCP leases</h2><div class="actions"><button id="clear-arp" class="secondary" disabled>Clear Ethernet ARP</button><button id="refresh" class="secondary">Refresh</button></div></div>
+<p class="muted" id="updated">Refreshes every 5 seconds</p>
+<div class="scroll"><table><thead><tr><th>IP</th><th>MAC</th><th>Hostname</th><th>Expires</th><th>Lease</th><th>ARP cache</th></tr></thead><tbody id="leases"></tbody></table></div>
+<p class="muted">ARP entries do not guarantee reachability. Clearing ARP preserves DHCP leases.</p>
+</section>
+<section>
+<div class="row"><h2>Discovered devices</h2><div class="actions"><label class="checkbox-label" for="auto-scan"><input type="checkbox" id="auto-scan"><span>Scan every minute</span></label><button id="scan" class="secondary" disabled>Scan now</button><button id="clear-discovered" class="secondary" disabled>Clear devices and ARP</button></div></div>
+<p class="muted">Discovery uses the saved Ethernet subnet, independently of DHCP. Active scans support /24 to /30. Last observed means an ARP entry was present, not that the device just responded. Names come from DHCP or DNS. Observations expire after 30 days.</p>
+<p class="muted" id="scan-state"></p>
+<div class="scroll"><table><thead><tr><th>IP</th><th>MAC</th><th>Hostname</th><th>Last observed</th><th>ARP cache</th></tr></thead><tbody id="discovered"></tbody></table></div>
+</section>
+<section><div class="row"><h2>Activity</h2><button id="clear-history" type="button" class="secondary" disabled>Clear activity</button></div><p class="muted">Lease changes are sampled every 3 seconds while DHCP runs. Latest 200 events.</p><div id="history"></div></section>
+<section><h2>Configuration backups</h2><p class="muted">Stored in /var/db/bootpd-panel/backups. See README for recovery.</p><div id="backups"></div></section>
+</main>
+<footer>Local access only / 127.0.0.1</footer>
+</body>
+</html>
