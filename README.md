@@ -26,11 +26,11 @@ The separately downloadable `Application.zip` contains both ready-to-run archite
 
 ## Downloads
 
-- [Apple Silicon app](https://github.com/insp175/bootpd-web/releases/download/v0.2.0/Bootpd-Web-macOS-AppleSilicon.zip)
-- [Intel app](https://github.com/insp175/bootpd-web/releases/download/v0.2.0/Bootpd-Web-macOS-Intel.zip)
-- [Application folder, both architectures](https://github.com/insp175/bootpd-web/releases/download/v0.2.0/Application.zip)
-- [Source folder](https://github.com/insp175/bootpd-web/releases/download/v0.2.0/Source.zip)
-- [Release notes and checksums](https://github.com/insp175/bootpd-web/releases/tag/v0.2.0)
+- [Apple Silicon app](https://github.com/insp175/bootpd-web/releases/download/v0.2.1/Bootpd-Web-macOS-AppleSilicon.zip)
+- [Intel app](https://github.com/insp175/bootpd-web/releases/download/v0.2.1/Bootpd-Web-macOS-Intel.zip)
+- [Application folder, both architectures](https://github.com/insp175/bootpd-web/releases/download/v0.2.1/Application.zip)
+- [Source folder](https://github.com/insp175/bootpd-web/releases/download/v0.2.1/Source.zip)
+- [Release notes and checksums](https://github.com/insp175/bootpd-web/releases/tag/v0.2.1)
 
 ## Quick start
 
@@ -43,7 +43,7 @@ The separately downloadable `Application.zip` contains both ready-to-run archite
 
 ## Candidate status
 
-Version 0.2.0 is available as a pre-release. These apps are ad-hoc signed and not notarized. Apple Silicon is smoke-tested; Intel is cross-compiled. Initial DHCP allocation and ping were confirmed with an iPhone 15 over USB-C Ethernet. Automatic renewal, upgrade, full uninstall and Ethernet restoration were also verified. DHCP release and Intel execution still need validation. See the [review](Source/docs/REVIEW.md) and [publishing notes](PUBLISHING.md).
+Version 0.2.1 is available as a pre-release. These apps are ad-hoc signed and not notarized. Apple Silicon is smoke-tested; Intel is cross-compiled. Initial DHCP allocation and ping were confirmed with an iPhone 15 over USB-C Ethernet. Automatic renewal, upgrade, full uninstall and Ethernet restoration were also verified. DHCP release and Intel execution still need validation. See the [review](Source/docs/REVIEW.md) and [publishing notes](PUBLISHING.md).
 
 Project code uses the [MIT license](Source/LICENSE). Bundled runtimes retain their original licenses.
 
@@ -51,8 +51,8 @@ Project code uses the [MIT license](Source/LICENSE). Bundled runtimes retain the
 
 Bootpd Web is an independent project, not affiliated with or endorsed by Apple Inc. Apple, Mac, macOS and iPhone are trademarks of Apple Inc., registered in the U.S. and other countries and regions.
 
-See the [third-party notices](Source/THIRD_PARTY.md) and [license and distribution review](Source/docs/COMPLIANCE.md). The v0.2.0 downloads were repackaged to include the supplemental native-library notices. Application behavior is unchanged.
+See the [third-party notices](Source/THIRD_PARTY.md) and [license and distribution review](Source/docs/COMPLIANCE.md). Downloads include native-library license notices and component inventory.
 
-## Next version in validation
+## Version 0.2.1
 
-The main branch includes **Clear expired leases** for version 0.2.1, currently undergoing local validation. It clears expired entries from this panel for the saved subnet while preserving the shared macOS lease database and active leases. Renewed leases reappear. The published application downloads above remain version 0.2.0 until validation is complete.
+**Clear expired leases** removes expired entries from this panel for the saved subnet. Active leases and the shared macOS lease database are preserved; renewed leases reappear. The control was checked on the installed app. Use **Install / Update Helper** when upgrading from 0.2.0.

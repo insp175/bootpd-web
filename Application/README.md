@@ -32,8 +32,12 @@ Requires macOS 12+. These pre-release packages are ad-hoc signed and not notariz
 
 SHA-256 checksums are provided alongside the ZIPs. When publishing, attach the two ZIPs and their checksum files to a GitHub release rather than committing the embedded runtime binaries to Git history.
 
-Downloads: https://github.com/insp175/bootpd-web/releases/tag/v0.2.0
+Downloads: https://github.com/insp175/bootpd-web/releases/tag/v0.2.1
 
 ## License review
 
-The v0.2.0 ZIPs were repackaged with supplemental native-library notices. Preserve the included licenses folder and THIRD_PARTY.md when redistributing. See the [notices](../Source/THIRD_PARTY.md) and [review](../Source/docs/COMPLIANCE.md). Bootpd Web is independent of Apple Inc.; references to macOS identify compatibility, not endorsement.
+Version 0.2.1 includes native-library license notices. Preserve the included licenses folder and THIRD_PARTY.md when redistributing. See the [notices](../Source/THIRD_PARTY.md) and [review](../Source/docs/COMPLIANCE.md). Bootpd Web is independent of Apple Inc.; references to macOS identify compatibility, not endorsement.
+
+## Upgrade from 0.2.0
+
+Replace the app with version 0.2.1, open it and choose **Install / Update Helper**. Approve the macOS administrator prompt, then open the fresh web panel. **Clear expired leases** clears expired panel entries for the saved subnet while preserving active leases and the shared macOS lease database. Renewed leases reappear.

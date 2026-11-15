@@ -9,3 +9,7 @@ Verify ZIP integrity, both app signatures and SHA-256 checksums. Attach the arch
 The 2026-11-16 packaging correction retains the application version 0.2.0 and original release tag. Superseded assets were removed after the replacement downloads were verified; corrected assets use the original download names. The explicit Source.zip and current main branch contain the packaging correction; GitHub's automatic source archives for the original tag do not.
 
 The release remains a pre-release: Apple Silicon allocation, automatic renewal, update and full uninstall were checked locally; physical Intel execution and DHCP release validation remain outstanding. These community builds are ad-hoc signed and not notarized. No Apple certification or endorsement is claimed.
+
+## Version 0.2.1
+
+Version 0.2.1 includes persistent clearing of expired panel leases. Its source archive is built from the source tree in the matching release tag. The Apple Silicon app includes the locally checked feature and helper; Intel uses the matching updated payload and retains the hardware-validation limitation. Native license texts and inventories remain bundled. Before publication, verify signatures and archive integrity; after publication, download all four ZIPs and verify SHA-256 again.

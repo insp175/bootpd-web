@@ -55,4 +55,4 @@ The user selected Uninstall with full data removal. Verification found no applic
 
 ## 0.2.1 expired lease clearing
 
-Regression coverage verifies active lease preservation, the expiry boundary, renewed and reassigned addresses, persistence after reopening the database, repeat clearing, subnet scope and unchanged shared lease file contents. The complete regression suite and JavaScript syntax check passed. The updated Desktop app and helper are provided for local user validation before publishing a new application release.
+Regression coverage verifies active lease preservation, the expiry boundary, renewed and reassigned addresses, persistence after reopening the database, repeat clearing, subnet scope and unchanged shared lease file contents. The complete regression suite and JavaScript syntax check passed. The updated Desktop app and helper were installed. The user cleared one expired lease; the helper activity record confirmed a count of one and the visible expired lease list became empty. DHCP remained disabled.
