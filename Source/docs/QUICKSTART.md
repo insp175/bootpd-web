@@ -27,7 +27,19 @@ Closing the browser does not stop DHCP. Quitting the app closes its web server; 
 
 ## macOS security notice
 
-This initial release is ad-hoc signed, not signed with an Apple Developer ID or notarized. macOS may block its first launch. After checking the source and download, use **System Settings > Privacy & Security > Open Anyway** if macOS offers that option. Do not disable Gatekeeper. Managed Macs may require administrator approval or a notarized build.
+**Bootpd Web is a community project. The downloadable apps are ad-hoc signed, without an Apple Developer ID certificate or Apple notarization.** macOS may block the first launch because it cannot verify the developer.
+
+If you trust this download and want to allow this app:
+
+1. Unzip the package, move **Bootpd Web.app** to **Applications** and try opening it once.
+2. Dismiss the warning, then open **Apple menu > System Settings > Privacy & Security**.
+3. Scroll down to **Security**, find the message about **Bootpd Web** and click **Open Anyway**.
+4. Authenticate if requested, then click **Open** in the confirmation dialog.
+
+The exception applies to this app; you do not need to disable Gatekeeper or use Terminal commands. If **Open Anyway** is missing, try opening the app again and return to this settings page. A managed Mac may prevent exceptions. Permission to launch the app is separate from the administrator approval required to install its helper.
+
+See [Apple's instructions for opening an unnotarized app](https://support.apple.com/en-us/102445).
+
 
 Requires macOS 12 or later. Choose AppleSilicon for M-series Macs or Intel for Intel Macs. AppleSilicon is tested locally; the Intel build is cross-compiled and has not been run on an Intel Mac. DHCP packet exchange requires a separate test network and is not certified for production use.
 
@@ -38,3 +50,7 @@ If the helper is unavailable, click **Install / Update Helper**. If a saved brow
 ARP cache entries are observations, not proof of current reachability. Devices can reappear immediately after clearing ARP. Hostnames are optional.
 
 Repository: https://github.com/insp175/bootpd-web
+
+## Licenses and affiliation
+
+Keep THIRD_PARTY.md and the licenses folder with the app when redistributing it. Copies are also stored inside the app payload. Bootpd Web is independent of Apple Inc. and is not affiliated with or endorsed by Apple. Apple, Mac, macOS and iPhone are trademarks of Apple Inc., registered in the U.S. and other countries and regions.

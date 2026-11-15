@@ -46,3 +46,9 @@ The separately downloadable `Application.zip` contains both ready-to-run archite
 Version 0.2.0 is available as a pre-release. These apps are ad-hoc signed and not notarized. Apple Silicon is smoke-tested; Intel is cross-compiled. Initial DHCP allocation and ping were confirmed with an iPhone 15 over USB-C Ethernet. Automatic renewal, upgrade, full uninstall and Ethernet restoration were also verified. DHCP release and Intel execution still need validation. See the [review](Source/docs/REVIEW.md) and [publishing notes](PUBLISHING.md).
 
 Project code uses the [MIT license](Source/LICENSE). Bundled runtimes retain their original licenses.
+
+## Licenses and affiliation
+
+Bootpd Web is an independent project, not affiliated with or endorsed by Apple Inc. Apple, Mac, macOS and iPhone are trademarks of Apple Inc., registered in the U.S. and other countries and regions.
+
+See the [third-party notices](Source/THIRD_PARTY.md) and [license and distribution review](Source/docs/COMPLIANCE.md). The v0.2.0 downloads were repackaged to include the supplemental native-library notices. Application behavior is unchanged.

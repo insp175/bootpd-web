@@ -51,6 +51,7 @@ def prepare_payload(archive_path, payload):
                 raise ValueError("Unsafe archive path")
         archive.extractall(payload)
     (payload / "python").rename(payload / "runtime")
+    shutil.copytree(PROJECT / "licenses", payload / "licenses")
     for name in ("app.py", "core.py", "helper.py", "network.py"):
         shutil.copy2(PROJECT / name, payload / name)
     shutil.copy2(PROJECT / "macos/service.py", payload / "service.py")
@@ -152,6 +153,7 @@ def build(arch, destination, cache):
         ("LICENSE", "LICENSE"),
     ):
         shutil.copy2(PROJECT / source, folder / name)
+    shutil.copytree(PROJECT / "licenses", folder / "licenses")
     sign_bundle(bundle)
     command("/usr/bin/codesign", "--verify", "--deep", "--strict", bundle)
     archive_application(folder, destination)

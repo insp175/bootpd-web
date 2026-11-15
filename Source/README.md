@@ -56,3 +56,7 @@ Apple Silicon is built and smoke-tested locally. Intel is cross-compiled and has
 ## License
 
 Project code: MIT. Bundled Python and other runtime components retain their original licenses; see [THIRD_PARTY.md](THIRD_PARTY.md).
+
+## Licenses and distribution review
+
+See [third-party notices](THIRD_PARTY.md) and the [license review](docs/COMPLIANCE.md). The v0.2.0 application ZIPs were repackaged with supplemental native-library notices. The builder copies these licenses into the app and download folder. Bootpd Web is independent of Apple Inc.
